@@ -14,24 +14,27 @@ using System.Threading.Tasks;
 
 public class DiscordController : MonoBehaviour
 {
+    public string getUrl;
+    public string postUrl;
 
+    // find it in  Dicord application Auth2
+    // client secret :DpCOc0lq40N2KcOSGikVEQofgoF-irAH
+    //Git Hub:
+    //https://github.com/business-helper/auto-fill-v2/blob/c3ec06a695d56a296cb43fff55c03c335b5a1ee3/src/js/pages/signin.js#L106
+    //authorixaion code  = AcOLG7GJjoNDIXKREG0NT9OozvNK0r
+    //                     AcOLG7GJjoNDIXKREG0NT9OozvNK0r
+    // client secret X7q0ISLXVZMF9fyRXgRe4bS482LZItSy
+    //Discord provided url , you must open the url and press AUTHORIZE
+    //https://discord.com/api/oauth2/authorize?client_id=965323445334331412&redirect_uri=http%3A%2F%2F127.0.0.1&response_type=code&scope=guilds%20identify
 
-// find it in  Dicord application Auth2
-// client secret :DpCOc0lq40N2KcOSGikVEQofgoF-irAH
-//Git Hub:
-//https://github.com/business-helper/auto-fill-v2/blob/c3ec06a695d56a296cb43fff55c03c335b5a1ee3/src/js/pages/signin.js#L106
-  //authorixaion code  = AcOLG7GJjoNDIXKREG0NT9OozvNK0r
-  //                     AcOLG7GJjoNDIXKREG0NT9OozvNK0r
-// client secret X7q0ISLXVZMF9fyRXgRe4bS482LZItSy
-//Discord provided url , you must open the url and press AUTHORIZE
-//https://discord.com/api/oauth2/authorize?client_id=965323445334331412&redirect_uri=http%3A%2F%2F127.0.0.1&response_type=code&scope=guilds%20identify
- 
-public static string clientIdstring = "965323445334331412";
+    public static string clientIdstring = "965323445334331412";
 public static System.Int64 clientId = 965323445334331412;
-    private static void Post_objectCreation(){ // ser wuli server ID: 947487866622201886
+    public   void Button_postRequest( string URL)
+    { // ser wuli server ID: 947487866622201886
+    
  
     
-          string URL =  "https://discord.com/oauth2/authorize?client_id=965323445334331412&redirect_uri=http%3A%2F%2F127.0.0.1&response_type=code&scope=guilds%20identify" ;
+      //    string URL =  "https://discord.com/oauth2/authorize?client_id=965323445334331412&redirect_uri=http%3A%2F%2F127.0.0.1&response_type=code&scope=guilds%20identify" ;
         string DATA = @"{""object"":{""name"":""Name""}}";
  
     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
@@ -99,7 +102,8 @@ public static System.Int64 clientId = 965323445334331412;
     // authorixaion code  = AcOLG7GJjoNDIXKREG0NT9OozvNK0r
    //     Application.OpenURL( "https://discord.com/api/oauth2/authorize?client_id=966257659374350346&redirect_uri=https%3A%2F%2Fwww.google.com%2F&response_type=code&scope=guilds%20identify" );
 //*******
-    Post_objectCreation();
+       //Post_objectCreation();
+       
         return;
      //  Application.OpenURL("https://discord.com/invite/TZszHsf92c");
 
@@ -179,7 +183,9 @@ userManager.OnCurrentUserUpdate += () => {
  
     }
 
-
+    public void Button_GetRequest(  string url ) {
+        StartCoroutine(GetRequest(url));
+    }
 
     IEnumerator SendWebhook(string link, string message, System.Action<bool> action)
     {

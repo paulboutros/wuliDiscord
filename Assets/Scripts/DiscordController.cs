@@ -248,7 +248,7 @@ userManager.GetUser( clientId  , (Discord.Result result, ref Discord.User user) 
     void Update()
     {
 
-        return;
+      
          discord.RunCallbacks();
     }
 }

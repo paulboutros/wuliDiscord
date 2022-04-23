@@ -11,9 +11,23 @@ using System.Net;
 using System.IO;
 using System;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 public class DiscordController : MonoBehaviour
 {
+    [Serializable]
+    public class GuildMember
+    {
+        [Serializable]
+        public class User {
+            public string id;
+            public string username;
+        }
+        public User user;
+
+        public string el;
+    }
+    List<GuildMember> guildMemberList = new List<GuildMember>();
 
     public string loginText;
     public string getUrl;
@@ -68,8 +82,20 @@ public static System.Int64 clientId = 965323445334331412;
 
     IEnumerator GetRequest(string uri)
     {
+
+        string envUrl = "https://discord.com/api";
+        string token = "OTY1MzIzNDQ1MzM0MzMxNDEy.YlxhhA.vQHQwcDYht6fOhDcGmes3UPsdbw";
+
+
+        uri = envUrl + "/guilds/947487866622201886/members?limit=100";
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
         {
+
+            
+            webRequest.SetRequestHeader("Authorization", "Bot OTY1MzIzNDQ1MzM0MzMxNDEy.YlxhhA.vQHQwcDYht6fOhDcGmes3UPsdbw");
+            webRequest.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+
             // Request and wait for the desired page.
             yield return webRequest.SendWebRequest();
 
@@ -83,6 +109,15 @@ public static System.Int64 clientId = 965323445334331412;
             else
             {
                 Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+
+
+                List<GuildMember> gl = JsonConvert.DeserializeObject<  List<GuildMember> >(webRequest.downloadHandler.text);
+                int i = 0;
+                foreach (var el in gl) {
+                    Debug.Log("i " +  i + " user id  ="+ el.user.id);
+                    i++;
+                }
+                int t = 1;
             }
         }
     }
@@ -96,7 +131,7 @@ public static System.Int64 clientId = 965323445334331412;
     //"https://discord.com/api/webhooks/779882899339739196/ETwncddV1Xar890W59khZn6xvs7PnhzYMGHPm7dPjljpaTyzlgRHpRS-ZXDJehizUjS_";
     public Discord.Discord discord;
     // Start is called before the first frame update
-
+   
 
     void Start () {
 
@@ -105,7 +140,7 @@ public static System.Int64 clientId = 965323445334331412;
     void GerDiscordData()
     {
 
-
+   //     return;
  // Call 
     // authorixaion code  = AcOLG7GJjoNDIXKREG0NT9OozvNK0r
    //     Application.OpenURL( "https://discord.com/api/oauth2/authorize?client_id=966257659374350346&redirect_uri=https%3A%2F%2Fwww.google.com%2F&response_type=code&scope=guilds%20identify" );
@@ -131,10 +166,10 @@ public static System.Int64 clientId = 965323445334331412;
          discord = new Discord.Discord(clientId, (System.UInt64)Discord.CreateFlags.Default ); // client ID
 
 
-    
 
-//discord.GetHas
- //let members =  discord.guilds.get(ID).members();
+
+        //discord.GetHas
+        //let members =  discord.guilds.get(ID).members();
 
         /*
       var activityManager  =  discord.GetActivityManager();
@@ -155,28 +190,14 @@ public static System.Int64 clientId = 965323445334331412;
       });
       */
 
-
        
-       /*
-       activityManager.SendInvite(clientId, Discord.ActivityActionType.Join, "Come play!", (result) =>
-       {
-           if (result == Discord.Result.Ok)
-           {
-               Debug.Log("Successfully joined !");
-           }
-           else
-           {
-               Debug.Log("Failed to join");
-           }
-       });
-       */
        // testing User info:
        //**********************************************************************************
        var userManager = discord.GetUserManager();
 // GetCurrentUser will error until this fires once.
 userManager.OnCurrentUserUpdate += () => {
   var currentUser = userManager.GetCurrentUser();
- Debug.Log("username => " +currentUser);
+// Debug.Log("username => " +currentUser);
    Debug.Log("username => " +currentUser.Username);
   Debug.Log("ID  => " +currentUser.Id);
   Debug.Log("Discriminator => " +currentUser.Discriminator);
@@ -184,11 +205,11 @@ userManager.OnCurrentUserUpdate += () => {
 
  
    
-   Program.MainX();
+ //  Program.MainX();
 };
+        return;
 
- 
-  TestFecthUserData();
+        TestFecthUserData();
  
     }
 
@@ -248,7 +269,7 @@ userManager.GetUser( clientId  , (Discord.Result result, ref Discord.User user) 
     void Update()
     {
 
-      
+      //  if ( discord == null )return;
          discord.RunCallbacks();
     }
 }

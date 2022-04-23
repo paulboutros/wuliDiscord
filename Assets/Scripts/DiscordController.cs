@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 
 public class DiscordController : MonoBehaviour
 {
+
+    public string loginText;
     public string getUrl;
     public string postUrl;
 
@@ -94,7 +96,13 @@ public static System.Int64 clientId = 965323445334331412;
     //"https://discord.com/api/webhooks/779882899339739196/ETwncddV1Xar890W59khZn6xvs7PnhzYMGHPm7dPjljpaTyzlgRHpRS-ZXDJehizUjS_";
     public Discord.Discord discord;
     // Start is called before the first frame update
-    void Start()
+
+
+    void Start () {
+
+        GerDiscordData();
+    }
+    void GerDiscordData()
     {
 
 
@@ -104,19 +112,19 @@ public static System.Int64 clientId = 965323445334331412;
 //*******
        //Post_objectCreation();
        
-        return;
+        
      //  Application.OpenURL("https://discord.com/invite/TZszHsf92c");
 
 
   
-
+        /*
         StartCoroutine(SendWebhook(webhook_link, "Some Message To the Server", (success) =>
         {
             if (success)
                 Debug.Log("Message Sent");
         }));
         //***********
-
+        */
 
        
 
@@ -128,6 +136,7 @@ public static System.Int64 clientId = 965323445334331412;
 //discord.GetHas
  //let members =  discord.guilds.get(ID).members();
 
+        /*
       var activityManager  =  discord.GetActivityManager();
       var activity = new Discord.Activity{
          Details = " on te desert Map",
@@ -144,7 +153,7 @@ public static System.Int64 clientId = 965323445334331412;
         }
 
       });
-
+      */
 
 
        
@@ -167,7 +176,7 @@ public static System.Int64 clientId = 965323445334331412;
 // GetCurrentUser will error until this fires once.
 userManager.OnCurrentUserUpdate += () => {
   var currentUser = userManager.GetCurrentUser();
-
+ Debug.Log("username => " +currentUser);
    Debug.Log("username => " +currentUser.Username);
   Debug.Log("ID  => " +currentUser.Id);
   Debug.Log("Discriminator => " +currentUser.Discriminator);
